@@ -48,29 +48,21 @@ class CQCustomComboDelegate : public QItemDelegate {
 
   void paint(QPainter *painter, const QStyleOptionViewItem &option,
              const QModelIndex &index) const {
-    int row = index.row();
-
-    CQCustomComboItem *item = static_cast<CQCustomComboItem *>(combo_->list()->item(row));
-
-    //painter->save();
+    CQCustomComboItem *item = static_cast<CQCustomComboItem *>(combo_->list()->item(index.row()));
 
     QStyleOptionMenuItem opt = getStyleOption(option, index, item);
 
     painter->fillRect(opt.rect, opt.palette.background());
 
     combo_->style()->drawControl(QStyle::CE_MenuItem, &opt, painter, combo_);
-
-    //painter->restore();
   }
 
-  QSize sizeHint(const QStyleOptionViewItem &, const QModelIndex &index) const {
-    QFontMetrics fm(combo_->font());
+  QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    CQCustomComboItem *item = static_cast<CQCustomComboItem *>(combo_->list()->item(index.row()));
 
-    int row = index.row();
+    QStyleOptionMenuItem opt = getStyleOption(option, index, item);
 
-    QString text = combo_->itemText(row);
-
-    return QSize(fm.width(text) + 4, fm.height() + 4);
+    return combo_->style()->sizeFromContents(QStyle::CT_MenuItem, &opt, option.rect.size(), combo_);
   }
 
   QStyleOptionMenuItem getStyleOption(const QStyleOptionViewItem &option,
@@ -147,7 +139,7 @@ class CQCustomComboDelegate : public QItemDelegate {
     menuOption.palette.setBrush(QPalette::All, QPalette::Background, bgBrush);
 
     menuOption.text = index.model()->data(index, Qt::DisplayRole).toString();
-    //menuOption.text = menuOption.text.replace(QLatin1Char('&'), QLatin1String("&&"));
+  //menuOption.text = menuOption.text.replace(QLatin1Char('&'), QLatin1String("&&"));
 
     menuOption.tabWidth     = 0;
     menuOption.maxIconWidth = option.decorationSize.width() + 4;

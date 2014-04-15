@@ -7,5 +7,5 @@ clean:
 	rm src/Makefile
 	cd test; qmake; make clean
 	rm test/Makefile
-	rm -f lib/libCQCheckTree.a
-	rm -f test/CQCheckTreeTest
+	rm -f lib/libCQCustomCombo.a
+	rm -f test/CQCustomComboTest
