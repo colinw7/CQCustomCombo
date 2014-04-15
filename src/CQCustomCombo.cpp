@@ -48,13 +48,22 @@ class CQCustomComboDelegate : public QItemDelegate {
 
   void paint(QPainter *painter, const QStyleOptionViewItem &option,
              const QModelIndex &index) const {
+<<<<<<< HEAD
     CQCustomComboItem *item = static_cast<CQCustomComboItem *>(combo_->list()->item(index.row()));
+=======
+    int row = index.row();
+
+    CQCustomComboItem *item = static_cast<CQCustomComboItem *>(combo_->list()->item(row));
+
+    //painter->save();
+>>>>>>> 14bd61b68d7f0e1815af59bdfd719ec9088c4c09
 
     QStyleOptionMenuItem opt = getStyleOption(option, index, item);
 
     painter->fillRect(opt.rect, opt.palette.background());
 
     combo_->style()->drawControl(QStyle::CE_MenuItem, &opt, painter, combo_);
+<<<<<<< HEAD
   }
 
   QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
@@ -63,6 +72,20 @@ class CQCustomComboDelegate : public QItemDelegate {
     QStyleOptionMenuItem opt = getStyleOption(option, index, item);
 
     return combo_->style()->sizeFromContents(QStyle::CT_MenuItem, &opt, option.rect.size(), combo_);
+=======
+
+    //painter->restore();
+  }
+
+  QSize sizeHint(const QStyleOptionViewItem &, const QModelIndex &index) const {
+    QFontMetrics fm(combo_->font());
+
+    int row = index.row();
+
+    QString text = combo_->itemText(row);
+
+    return QSize(fm.width(text) + 4, fm.height() + 4);
+>>>>>>> 14bd61b68d7f0e1815af59bdfd719ec9088c4c09
   }
 
   QStyleOptionMenuItem getStyleOption(const QStyleOptionViewItem &option,
@@ -139,7 +162,11 @@ class CQCustomComboDelegate : public QItemDelegate {
     menuOption.palette.setBrush(QPalette::All, QPalette::Background, bgBrush);
 
     menuOption.text = index.model()->data(index, Qt::DisplayRole).toString();
+<<<<<<< HEAD
   //menuOption.text = menuOption.text.replace(QLatin1Char('&'), QLatin1String("&&"));
+=======
+    //menuOption.text = menuOption.text.replace(QLatin1Char('&'), QLatin1String("&&"));
+>>>>>>> 14bd61b68d7f0e1815af59bdfd719ec9088c4c09
 
     menuOption.tabWidth     = 0;
     menuOption.maxIconWidth = option.decorationSize.width() + 4;
