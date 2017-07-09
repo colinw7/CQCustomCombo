@@ -4,8 +4,8 @@ all:
 
 clean:
 	cd src; qmake; make clean
-	rm src/Makefile
+	rm -f src/Makefile
 	cd test; qmake; make clean
-	rm test/Makefile
+	rm -f test/Makefile
 	rm -f lib/libCQCustomCombo.a
 	rm -f test/CQCustomComboTest
