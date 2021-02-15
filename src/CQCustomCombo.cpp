@@ -10,6 +10,8 @@ class CQCustomComboItem : public QListWidgetItem {
 
   virtual ~CQCustomComboItem() { }
 
+  CQCustomCombo *combo() const { return combo_; }
+
   void setIsTitle(bool b) {
     isTitle_ = b;
 
