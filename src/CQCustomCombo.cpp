@@ -54,7 +54,7 @@ class CQCustomComboDelegate : public QItemDelegate {
 
     QStyleOptionMenuItem opt = getStyleOption(option, index, item);
 
-    painter->fillRect(opt.rect, opt.palette.background());
+    painter->fillRect(opt.rect, opt.palette.window());
 
     combo_->style()->drawControl(QStyle::CE_MenuItem, &opt, painter, combo_);
   }
@@ -130,7 +130,7 @@ class CQCustomComboDelegate : public QItemDelegate {
     }
 #endif
 
-    QBrush bgBrush = menuOption.palette.brush(QPalette::Background);
+    QBrush bgBrush = menuOption.palette.brush(QPalette::Window);
 
     if (index.data(Qt::BackgroundRole).canConvert<QBrush>())
       bgBrush = qvariant_cast<QBrush>(index.data(Qt::BackgroundRole));
@@ -138,7 +138,7 @@ class CQCustomComboDelegate : public QItemDelegate {
     if (item->isTitle())
       bgBrush = resolvedpalette.brush(QPalette::Active, QPalette::Highlight);
 
-    menuOption.palette.setBrush(QPalette::All, QPalette::Background, bgBrush);
+    menuOption.palette.setBrush(QPalette::All, QPalette::Window, bgBrush);
 
     menuOption.text = index.model()->data(index, Qt::DisplayRole).toString();
   //menuOption.text = menuOption.text.replace(QLatin1Char('&'), QLatin1String("&&"));
