@@ -49,8 +49,8 @@ class CQCustomComboDelegate : public QItemDelegate {
   }
 
   void paint(QPainter *painter, const QStyleOptionViewItem &option,
-             const QModelIndex &index) const {
-    CQCustomComboItem *item = static_cast<CQCustomComboItem *>(combo_->list()->item(index.row()));
+             const QModelIndex &index) const override {
+    auto *item = static_cast<CQCustomComboItem *>(combo_->list()->item(index.row()));
 
     QStyleOptionMenuItem opt = getStyleOption(option, index, item);
 
@@ -59,8 +59,8 @@ class CQCustomComboDelegate : public QItemDelegate {
     combo_->style()->drawControl(QStyle::CE_MenuItem, &opt, painter, combo_);
   }
 
-  QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    CQCustomComboItem *item = static_cast<CQCustomComboItem *>(combo_->list()->item(index.row()));
+  QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override {
+    auto *item = static_cast<CQCustomComboItem *>(combo_->list()->item(index.row()));
 
     QStyleOptionMenuItem opt = getStyleOption(option, index, item);
 
@@ -188,7 +188,7 @@ CQCustomComboItem(CQCustomCombo *combo, const QString &str) :
 
 CQCustomCombo::
 CQCustomCombo(QWidget *parent) :
- QComboBox(parent), list_(0)
+ QComboBox(parent), list_(nullptr)
 {
   list_ = new QListWidget;
   list_->setItemDelegate(new CQCustomComboDelegate(this));
@@ -219,7 +219,7 @@ void
 CQCustomCombo::
 setIsTitle(int ind, bool b)
 {
-  CQCustomComboItem *item = dynamic_cast<CQCustomComboItem *>(list_->item(ind));
+  auto *item = dynamic_cast<CQCustomComboItem *>(list_->item(ind));
 
   item->setIsTitle(b);
 
@@ -230,7 +230,7 @@ void
 CQCustomCombo::
 setSelectable(int ind, bool b)
 {
-  CQCustomComboItem *item = dynamic_cast<CQCustomComboItem *>(list_->item(ind));
+  auto *item = dynamic_cast<CQCustomComboItem *>(list_->item(ind));
 
   item->setSelectable(b);
 
@@ -241,13 +241,13 @@ void
 CQCustomCombo::
 resetCurrentInd()
 {
-  CQCustomComboItem *item = static_cast<CQCustomComboItem *>(list()->item(currentIndex()));
+  auto *item = static_cast<CQCustomComboItem *>(list()->item(currentIndex()));
 
   if (item->isSelectable())
     return;
 
   for (int i = 0; i < count(); ++i) {
-    CQCustomComboItem *item = static_cast<CQCustomComboItem *>(list()->item(i));
+    auto *item = static_cast<CQCustomComboItem *>(list()->item(i));
 
     if (item->isSelectable()) {
       setCurrentIndex(i);
